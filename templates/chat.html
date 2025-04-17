@@ -50,6 +50,21 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Common Questions Section -->
+                <div class="common-questions-container">
+                    <div class="common-questions-header">
+                        <i class="fas fa-question-circle"></i> Quick Questions
+                    </div>
+                    <div class="common-questions-scroll">
+                        <div class="common-questions-buttons">
+                            {% for question in common_questions %}
+                                <button class="question-btn">{{ question }}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="chat-input">
                     <form id="messageArea" class="input-group">
                         <input type="text" id="text" name="msg" placeholder="Type your question here..." autocomplete="off" class="form-control" required>
@@ -74,6 +89,14 @@
                 const date = new Date();
                 return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             }
+
+            // Handle Quick Questions buttons
+            $(".question-btn").on("click", function() {
+                const questionText = $(this).text();
+                $("#text").val(questionText);
+                // Auto-submit the form
+                $("#messageArea").submit();
+            });
 
             // Handle message submission
             $("#messageArea").on("submit", function(event) {
@@ -166,6 +189,44 @@
                 `;
                 $("#messageFormeight").append(welcomeHtml);
             });
+            
+            // Function to refresh the common questions
+            function refreshCommonQuestions() {
+                $.ajax({
+                    url: "/refresh_questions",
+                    type: "GET",
+                    success: function(data) {
+                        if (data.questions && data.questions.length > 0) {
+                            // Clear existing buttons
+                            $(".common-questions-buttons").empty();
+                            
+                            // Add new buttons
+                            data.questions.forEach(function(question) {
+                                $(".common-questions-buttons").append(
+                                    `<button class="question-btn">${question}</button>`
+                                );
+                            });
+                            
+                            // Reattach click handlers
+                            $(".question-btn").off('click').on("click", function() {
+                                const questionText = $(this).text();
+                                $("#text").val(questionText);
+                                // Auto-submit the form
+                                $("#messageArea").submit();
+                            });
+                        }
+                    },
+                    error: function(error) {
+                        console.log("Error refreshing questions:", error);
+                    }
+                });
+            }
+            
+            // Refresh questions every 5 minutes (adjust as needed)
+            setInterval(refreshCommonQuestions, 5 * 60 * 1000);
+            
+            // Also refresh when the page loads
+            setTimeout(refreshCommonQuestions, 1000);
         });
     </script>
 </body>

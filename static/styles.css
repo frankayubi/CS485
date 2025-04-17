@@ -324,3 +324,85 @@ body, html {
         padding: 10px;
     }
 }
+/* Add these styles to your existing styles.css file */
+
+/* Common Questions Section */
+.common-questions-container {
+    background-color: #f0f7ff;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 10px;
+}
+
+.common-questions-header {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.common-questions-header i {
+    margin-right: 5px;
+}
+
+.common-questions-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 5px;
+}
+
+.common-questions-buttons {
+    display: inline-flex;
+    gap: 8px;
+    padding: 2px;
+}
+
+.question-btn {
+    border: 1px solid var(--primary-color);
+    background-color: white;
+    color: var(--primary-color);
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.question-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Custom scrollbar for the questions container */
+.common-questions-scroll::-webkit-scrollbar {
+    height: 4px;
+}
+
+.common-questions-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.common-questions-scroll::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+/* Adjust the chat container height to accommodate the questions section */
+.chat-messages {
+    height: calc(100vh - 220px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .question-btn {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+    }
+    
+    .chat-messages {
+        height: calc(100vh - 210px);
+    }
+}
